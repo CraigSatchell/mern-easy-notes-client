@@ -1,39 +1,11 @@
-import { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { CssBaseline, AppBar, Toolbar, Button, Card, CardContent, Grid, IconButton, Typography, Container } from '@material-ui/core'
+import { CssBaseline, AppBar, Toolbar, IconButton, Typography, Container } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import useStyles from './style'
+import './style.css'
 
-import axios from 'axios'
-
-// setup axios for Restful API calls to Notes database
-const api = axios.create({
-  baseURL: `http://localhost:3001/notes`
-})
-
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
+import Notes from './components/Notes'
 
 function App() {
-  const [notes, setNotes] = useState([])
-
-  // make API call
-  useEffect(() => {
-    api.get('/').then(res => setNotes(res.data))
-  }, [])
-  console.log('NOTES:',notes)
-
   const classes = useStyles()
   return (
     <>
@@ -50,6 +22,13 @@ function App() {
           </Toolbar>
         </AppBar>
       </header>
+      <main>
+        <Container className={classes.notes}>
+          <Typography>
+            <Notes />
+          </Typography>
+        </Container>
+      </main>
     </>
   );
 }
